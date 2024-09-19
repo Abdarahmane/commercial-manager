@@ -53,7 +53,7 @@
               <div class="row">
                 <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary me-2">submit</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Return to OrderList</button>
               </div>
                 <div class="col-md-6 mb-3">
                   <label for="date" class="form-label">Date</label>
