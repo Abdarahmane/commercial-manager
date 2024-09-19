@@ -2,7 +2,7 @@
   <div class="container my-4">
     <h1>List of Customers</h1>
     <div class="mb-3 d-flex justify-content-end">
-      <!-- Button to trigger the Add Customer modal -->
+      
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Add Customer</button>
     </div>
     <table class="table table-striped col-12">
@@ -73,7 +73,7 @@
 </div>
 
 
-    <!-- Customer Details / Edit / Delete Modal -->
+   
     <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -177,11 +177,11 @@ export default {
       modal.hide();
     },
     addCustomer() {
-      // Logic to add the new customer
+      
       alert(`Customer ${this.newCustomer.name} added successfully.`);
       this.customers.push({
         ...this.newCustomer,
-        id: this.customers.length + 1 // Simplified ID generation for example
+        id: this.customers.length + 1 
       });
       const modal = bootstrap.Modal.getInstance(document.getElementById('addCustomerModal'));
       modal.hide();
