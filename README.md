@@ -1,87 +1,74 @@
+# Projet de Gestion Commerciale
 
+Ce projet est une application web de gestion commerciale développée avec Vue.js. L'application permet de gérer efficacement divers aspects commerciaux grâce à une interface utilisateur interactive et intuitive. Les fonctionnalités incluent la gestion des clients, des produits, et des commandes, tout en offrant une expérience utilisateur fluide.
 
+## Installation
 
+1. Cloner le dépôt :
 
-# Projet de Gestion de Bibliothèque
+    ```bash
+    git clone https://github.com/Abdarahmane/commercial-manager.git
+    ```
 
-Ce projet est une application web de gestion de bibliothèque développée avec Vue.js. L'application permet de gérer efficacement les livres, les membres et les prêts au sein de la bibliothèque grâce à une interface utilisateur intuitive et interactive. Les détails des livres, des membres et des prêts sont présentés de manière organisée, offrant une expérience utilisateur fluide et agréable.
+2. Se rendre dans le répertoire du projet :
 
-   
- **Installation**
+    ```bash
+    cd commercial-manager
+    ```
 
- Cloner le dépôt :
+3. Installer les dépendances :
 
-    bash
+   Assure-toi d'avoir Node.js et npm installés sur ta machine.
 
-     git clone https://github.com/Abdarahmane/Gestion_Bibliotheque-2.git
-
-
-     cd  .\Projet_Gestion_Bibliotheque\
-
-Installer les dépendances :
-
-Assure-toi d'avoir Node.js et npm installés sur ta machine.
-
-```bash
-
-    npm install bootstrap
-````
-    npm install router@
-````
+    ```bash
     npm install
+    ```
+
+   Si tu utilises des bibliothèques spécifiques comme Bootstrap ou Vue Router, assure-toi de les installer également :
+
+    ```bash
+    npm install bootstrap
+    ````
+    ```
+    npm install vue-router
+    ```
 
 ## Fonctionnalités
 
-### 1. Gestion des Livres
+### 1. Gestion des Clients
 
-- **Ajouter un Livre :** Permet d'ajouter un nouveau livre à la bibliothèque en fournissant les informations telles que le titre, l'auteur, l'année de publication, etc.
-- **Lister les Livres :** Affiche une liste de tous les livres disponibles dans la bibliothèque, avec la possibilité de les trier ou de les filtrer.
-- **Détails du Livre :** Affiche les détails complets d'un livre dans un modal Bootstrap, y compris l'identifiant, le titre, l'auteur et l'année de publication.
-- **Modifier un Livre :** Permet de modifier les informations d'un livre existant.
-- **Supprimer un Livre :** Supprime un livre de la bibliothèque.
+- **Ajouter un Client** : Permet d'ajouter un nouveau client avec des informations telles que le nom, l'adresse, et les coordonnées de contact.
+- **Lister les Clients** : Affiche une liste de tous les clients, avec des options de tri et de filtrage.
+- **Détails du Client** : Affiche les détails complets d'un client dans une vue dédiée.
+- **Modifier un Client** : Permet de mettre à jour les informations d'un client existant.
+- **Supprimer un Client** : Supprime un client de la base de données.
 
-### 2. Gestion des Membres
+### 2. Gestion des Produits
 
-- **Ajouter un Membre :** Permet d'ajouter un nouveau membre à la bibliothèque avec des informations comme le nom, l'adresse, etc.
-- **Lister les Membres :** Affiche une liste de tous les membres inscrits, avec des options de tri et de filtrage.
-- **Détails du Membre :** Affiche les informations détaillées d'un membre dans un modal.
-- **Modifier un Membre :** Permet de mettre à jour les informations d'un membre.
-- **Supprimer un Membre :** Supprime un membre de la bibliothèque.
+- **Ajouter un Produit** : Permet d'ajouter un nouveau produit avec des détails comme le nom, la description, le prix, et la quantité en stock.
+- **Lister les Produits** : Affiche une liste de tous les produits disponibles, avec la possibilité de trier ou de filtrer.
+- **Détails du Produit** : Affiche les informations détaillées d'un produit dans une vue dédiée.
+- **Modifier un Produit** : Permet de mettre à jour les informations d'un produit existant.
+- **Supprimer un Produit** : Supprime un produit de la base de données.
 
-### 3. Gestion des Prêts
+### 3. Gestion des Commandes
 
-- **Enregistrer un Prêt :** Permet de gérer les emprunts de livres par les membres, en enregistrant les informations sur le livre emprunté, le membre, et la date de retour prévue.
-- **Lister les Prêts :** Affiche une liste de tous les prêts en cours et terminés, avec des détails sur chaque emprunt.
-- **Modifier un Prêt :** Permet de mettre à jour les informations d'un prêt, comme la date de retour.
-- **Supprimer un Prêt :** Permet de supprimer un enregistrement de prêt.
+- **Enregistrer une Commande** : Permet de gérer les commandes passées par les clients, incluant les produits commandés, les quantités, et les informations de facturation.
+- **Lister les Commandes** : Affiche une liste de toutes les commandes passées, avec des détails sur chaque commande.
+- **Modifier une Commande** : Permet de mettre à jour les informations d'une commande, comme l'état de la commande ou les produits inclus.
+- **Supprimer une Commande** : Permet de supprimer un enregistrement de commande.
 
 ### 4. Navigation et Interface Utilisateur
 
-- **Vue Router :** Utilisation de Vue Router pour naviguer facilement entre les différentes pages (Livres, Membres, Prêts, etc.).
-- **Interface Interactive :** Interface utilisateur réactive et interactive, facilitée par Vue.js et Bootstrap, offrant une expérience utilisateur fluide.
+- **Vue Router** : Utilisation de Vue Router pour naviguer facilement entre les différentes pages (Clients, Produits, Commandes, etc.).
+- **Interface Interactive** : Interface utilisateur réactive et interactive, facilitée par Vue.js et Bootstrap, offrant une expérience utilisateur fluide.
 
-  
-**Lancer le serveur de développement :**
+## Lancer le serveur de développement
 
-bash
-
-    npm run dev
-
-**Accéder à l'application :**
-
-   
- Ouvre ton navigateur et visite
- 
-     http://localhost:5173/ 
-
-### Author
- [Abdarahmane Demba](https://github.com/Abdarahmane/Gestion_Bibliotheque-2.git)
- et
-[Fatima cissé](https://github.com/Fatoumacisse99)
-
- 
-
- 
+```bash
+npm run dev
+```
+## Autheur
+[Abdarahmane Ibrahima Demba](https://github.com/Abdarahmane/commercial-manager.git)
    
 
-   
