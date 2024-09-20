@@ -2,36 +2,33 @@
 
 Ce projet est une application web de gestion commerciale développée avec Vue.js. L'application permet de gérer efficacement divers aspects commerciaux grâce à une interface utilisateur interactive et intuitive. Les fonctionnalités incluent la gestion des clients, des produits, et des commandes, tout en offrant une expérience utilisateur fluide.
 
-## Installation
+# Installation et Lancement
 
-1. Cloner le dépôt :
+## Prérequis
+- **Node.js** : Assurez-vous d'avoir installé Node.js sur votre machine.
 
-    ```bash
-    git clone https://github.com/Abdarahmane/commercial-manager.git
-    ```
+## Étapes d'installation
 
-2. Se rendre dans le répertoire du projet :
+1. **Cloner le dépôt**
+   ```bash
+   git clone https://github.com/Abdarahmane/commercial-manager.git
+   ```
 
-    ```bash
-    cd commercial-manager
-    ```
+2. **Accéder au répertoire du projet**
+   ```bash
+   cd commercial-manager
+   ```
 
-3. Installer les dépendances :
+3. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
 
-   Assure-toi d'avoir Node.js et npm installés sur ta machine.
+4. **Lancer l'application**
+   ```bash
+   npm run dev
+   ```
 
-    ```bash
-    npm install
-    ```
-
-   Si tu utilises des bibliothèques spécifiques comme Bootstrap ou Vue Router, assure-toi de les installer également :
-
-    ```bash
-    npm install bootstrap
-    ````
-    ```
-    npm install vue-router
-    ```
 
 ## Fonctionnalités
 
@@ -63,12 +60,8 @@ Ce projet est une application web de gestion commerciale développée avec Vue.j
 - **Vue Router** : Utilisation de Vue Router pour naviguer facilement entre les différentes pages (Clients, Produits, Commandes, etc.).
 - **Interface Interactive** : Interface utilisateur réactive et interactive, facilitée par Vue.js et Bootstrap, offrant une expérience utilisateur fluide.
 
-## Lancer le serveur de développement
 
-```bash
-npm run dev
-```
 ## Autheur
-[Abdarahmane Ibrahima Demba](https://github.com/Abdarahmane/commercial-manager.git)
+[Abdarahmane Ibrahima Demba](https://github.com/account)
    
 
