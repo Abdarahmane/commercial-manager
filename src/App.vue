@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <!-- Barre de navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Ajouter un margin-left à la barre de navigation -->
+        <div class="collapse navbar-collapse ml-3" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" to="/customers">
@@ -30,13 +30,6 @@
     <router-view></router-view>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'App',
-};
-</script>
-
 <style scoped>
 .nav-link {
   margin-right: 12px;
@@ -52,5 +45,10 @@ export default {
 .nav-link:hover {
   text-decoration: underline;
   color: rgb(51, 51, 243);
+}
+
+/* Ajoute cette classe pour les marges à gauche */
+.ml-3 {
+  margin-left: 54px; /* Ajuste cette valeur selon tes préférences */
 }
 </style>
