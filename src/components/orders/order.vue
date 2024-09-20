@@ -450,15 +450,23 @@ export default {
     addNewDetail() {
       this.newOrder.details.push({ product: "", quantity: 1, price: 0 });
     },
-    removeDetail(index) {
+     removeDetail(index) {
+    if (this.newOrder.details.length > 1) {
       this.newOrder.details.splice(index, 1);
-    },
+    } else {
+      alert('At least one item must be present.');
+    }
+  },
     addNewDetailToEdit() {
       this.selectedOrder.details.push({ product: "", quantity: 1, price: 0 });
     },
-    removeDetailFromEdit(index) {
+   removeDetailFromEdit(index) {
+    if (this.selectedOrder.details.length > 1) {
       this.selectedOrder.details.splice(index, 1);
-    },
-  },
+    } else {
+      alert('At least one item must be present.');
+    }
+  }
+  }
 };
 </script>
