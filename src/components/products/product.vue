@@ -2,11 +2,7 @@
   <div class="container my-4">
     <h1>List of Products</h1>
     <div class="mb-3 d-flex justify-content-end">
-      <button
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#addProductModal"
-      >
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" @click="openModal('add')">
         Add Product
       </button>
     </div>
@@ -33,292 +29,118 @@
           <td>{{ product.barcode }}</td>
           <td>{{ product.status }}</td>
           <td>
-            <button
-              class="btn btn-info btn-sm me-2"
-              @click="showModal('view', product)"
-            >
-              <i class="fa fa-eye" style="font-size: 0.8em"></i>
+            <button class="btn btn-info btn-sm me-2" @click="openModal('view', product)">
+              <i class="fa fa-eye"></i>
             </button>
-            <button
-              class="btn btn-warning btn-sm me-2"
-              @click="showModal('edit', product)"
-            >
-              <i class="fa fa-pencil" style="font-size: 0.8em"></i>
+            <button class="btn btn-warning btn-sm me-2" @click="openModal('edit', product)">
+              <i class="fa fa-pencil"></i>
             </button>
-            <button
-              class="btn btn-danger btn-sm"
-              @click="showModal('delete', product.id)"
-            >
-              <i class="fa fa-trash" style="font-size: 0.9em"></i>
+            <button class="btn btn-danger btn-sm" @click="confirmDelete(product.id)">
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Add Product Modal -->
-    <div
-      class="modal fade"
-      id="addProductModal"
-      tabindex="-1"
-      aria-labelledby="addProductModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form @submit.prevent="addProduct">
-              <div class="row g-2">
-                <div class="col-6">
-                  <div class="mb-2">
-                    <label for="name" class="form-label">Name</label>
-                    <input
-                      v-model="newProduct.name"
-                      type="text"
-                      class="form-control form-control-sm"
-                      id="name"
-                      required
-                    />
-                  </div>
-                  <div class="mb-2">
-                    <label for="price" class="form-label">Price</label>
-                    <input
-                      v-model="newProduct.price"
-                      type="number"
-                      step="0.01"
-                      class="form-control form-control-sm"
-                      id="price"
-                      required
-                    />
-                  </div>
-                  <div class="mb-2">
-                    <label for="barcode" class="form-label">Barcode</label>
-                    <input
-                      v-model="newProduct.barcode"
-                      type="text"
-                      class="form-control form-control-sm"
-                      id="barcode"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="mb-2">
-                    <label for="category" class="form-label">Category</label>
-                    <input
-                      v-model="newProduct.category"
-                      type="text"
-                      class="form-control form-control-sm"
-                      id="category"
-                      required
-                    />
-                  </div>
-                  <div class="mb-2">
-                    <label for="stock" class="form-label">Stock</label>
-                    <input
-                      v-model="newProduct.stock"
-                      type="number"
-                      class="form-control form-control-sm"
-                      id="stock"
-                      required
-                    />
-                  </div>
-                  <div class="mb-2">
-                    <label for="status" class="form-label">Status</label>
-                    <select
-                      v-model="newProduct.status"
-                      class="form-select form-select-sm"
-                      id="status"
-                      required
-                    >
-                      <option value="Available">Available</option>
-                      <option value="Out of Stock">Out of Stock</option>
-                      <option value="Discontinued">Discontinued</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-2">
-                <label for="description" class="form-label">Description</label>
-                <textarea
-                  v-model="newProduct.description"
-                  class="form-control form-control-sm"
-                  id="description"
-                  rows="2"
-                ></textarea>
-              </div>
-              <div class="d-flex justify-content-end mt-2">
-                <button type="submit" class="btn btn-primary btn-sm me-2">
-                  confirm
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary btn-sm"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Product Details / Edit / Delete Modal -->
-    <div
-      class="modal fade"
-      id="productModal"
-      tabindex="-1"
-      aria-labelledby="productModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-sm">
+    <!-- Add/Edit/View Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="productModalLabel">{{ modalTitle }}</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
+            <form v-if="modalAction !== 'view'" @submit.prevent="modalAction === 'add' ? addProduct() : submitEdit()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label">Product Name</label>
+                  <input v-model="currentProduct.name" type="text" class="form-control" id="name" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="category" class="form-label">Category</label>
+                  <input v-model="currentProduct.category" type="text" class="form-control" id="category" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="price" class="form-label">Price</label>
+                  <input v-model="currentProduct.price" type="number" step="0.01" class="form-control" id="price" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="stock" class="form-label">Stock Quantity</label>
+                  <input v-model="currentProduct.stock" type="number" class="form-control" id="stock" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="barcode" class="form-label">Barcode</label>
+                  <input v-model="currentProduct.barcode" type="text" class="form-control" id="barcode" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="status" class="form-label">Status</label>
+                  <select v-model="currentProduct.status" class="form-select" id="status" required>
+                    <option value="Available">Available</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Discontinued">Discontinued</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea v-model="currentProduct.description" class="form-control" id="description"></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary me-2">Confirm</button>
+                <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+              </div>
+            </form>
+
+            <!-- View Mode -->
             <div v-if="modalAction === 'view'">
-              <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
-              <p>
-                <strong>Description:</strong> {{ selectedProduct.description }}
-              </p>
-              <p>
-                <strong>Price:</strong> \${{ selectedProduct.price.toFixed(2) }}
-              </p>
-              <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
-              <p><strong>Category:</strong> {{ selectedProduct.category }}</p>
-              <p><strong>Barcode:</strong> {{ selectedProduct.barcode }}</p>
-              <p><strong>Status:</strong> {{ selectedProduct.status }}</p>
-            </div>
-
-            <div v-if="modalAction === 'edit'">
-              <form @submit.prevent="submitEdit">
-                <div class="row g-2">
-                  <div class="col-6">
-                    <div class="mb-2">
-                      <label for="name" class="form-label">Name</label>
-                      <input
-                        v-model="selectedProduct.name"
-                        type="text"
-                        class="form-control form-control-sm"
-                        id="name"
-                        required
-                      />
-                    </div>
-                    <div class="mb-2">
-                      <label for="price" class="form-label">Price</label>
-                      <input
-                        v-model="selectedProduct.price"
-                        type="number"
-                        step="0.01"
-                        class="form-control form-control-sm"
-                        id="price"
-                        required
-                      />
-                    </div>
-                    <div class="mb-2">
-                      <label for="barcode" class="form-label">Barcode</label>
-                      <input
-                        v-model="selectedProduct.barcode"
-                        type="text"
-                        class="form-control form-control-sm"
-                        id="barcode"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="mb-2">
-                      <label for="category" class="form-label">Category</label>
-                      <input
-                        v-model="selectedProduct.category"
-                        type="text"
-                        class="form-control form-control-sm"
-                        id="category"
-                        required
-                      />
-                    </div>
-                    <div class="mb-2">
-                      <label for="stock" class="form-label">Stock</label>
-                      <input
-                        v-model="selectedProduct.stock"
-                        type="number"
-                        class="form-control form-control-sm"
-                        id="stock"
-                        required
-                      />
-                    </div>
-                    <div class="mb-2">
-                      <label for="status" class="form-label">Status</label>
-                      <select
-                        v-model="selectedProduct.status"
-                        class="form-select form-select-sm"
-                        id="status"
-                        required
-                      >
-                        <option value="Available">Available</option>
-                        <option value="Out of Stock">Out of Stock</option>
-                        <option value="Discontinued">Discontinued</option>
-                      </select>
-                    </div>
-                  </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label">Product Name</label>
+                  <input v-model="currentProduct.name" type="text" class="form-control" id="name" disabled />
                 </div>
-                <div class="mb-2">
-                  <label for="description" class="form-label"
-                    >Description</label
-                  >
-                  <textarea
-                    v-model="selectedProduct.description"
-                    class="form-control form-control-sm"
-                    id="description"
-                    rows="2"
-                  ></textarea>
+                <div class="col-md-6 mb-3">
+                  <label for="category" class="form-label">Category</label>
+                  <input v-model="currentProduct.category" type="text" class="form-control" id="category" disabled />
                 </div>
-                <div class="d-flex justify-content-end mt-2">
-                  <button type="submit" class="btn btn-primary btn-sm me-2">
-                    confirm
-                  </button>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="price" class="form-label">Price</label>
+                  <input v-model="currentProduct.price" type="number" step="0.01" class="form-control" id="price" disabled />
                 </div>
-              </form>
+                <div class="col-md-6 mb-3">
+                  <label for="stock" class="form-label">Stock Quantity</label>
+                  <input v-model="currentProduct.stock" type="number" class="form-control" id="stock" disabled />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="barcode" class="form-label">Barcode</label>
+                  <input v-model="currentProduct.barcode" type="text" class="form-control" id="barcode" disabled />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="status" class="form-label">Status</label>
+                  <select v-model="currentProduct.status" class="form-select" id="status" disabled>
+                    <option value="Available">Available</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Discontinued">Discontinued</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea v-model="currentProduct.description" class="form-control" id="description" disabled></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+              </div>
             </div>
-
-            <div v-if="modalAction === 'delete'">
-              <p>Are you sure you want to delete {{ selectedProduct.name }}?</p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary btn-sm"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              v-if="modalAction === 'delete'"
-              type="button"
-              class="btn btn-danger btn-sm"
-              @click="confirmDelete"
-            >
-              Delete
-            </button>
           </div>
         </div>
       </div>
@@ -341,28 +163,9 @@ export default {
           barcode: "1234567890123",
           status: "Available",
         },
-        {
-          id: 2,
-          name: "Product 2",
-          description: "Description for Product 2",
-          price: 20.0,
-          stock: 200,
-          category: "Category 2",
-          barcode: "1234567890124",
-          status: "Out of Stock",
-        },
-        {
-          id: 3,
-          name: "Product 3",
-          description: "Description for Product 3",
-          price: 30.0,
-          stock: 300,
-          category: "Category 3",
-          barcode: "1234567890125",
-          status: "Available",
-        },
+        // Add more product objects here...
       ],
-      newProduct: {
+      currentProduct: {
         name: "",
         description: "",
         price: 0,
@@ -371,65 +174,63 @@ export default {
         barcode: "",
         status: "Available",
       },
-      selectedProduct: null,
-      modalAction: null,
-      modalTitle: "",
+      modalAction: "add",
+      modalTitle: "Add Product",
     };
   },
   methods: {
-    showModal(action, product) {
+    openModal(action, product = null) {
       this.modalAction = action;
-      if (action === "view" || action === "edit") {
-        this.selectedProduct = { ...product };
-        this.modalTitle = action === "view" ? "View Product" : "Edit Product";
-      } else if (action === "delete") {
-        this.selectedProduct = product;
-        this.modalTitle = "Delete Product";
+      if (action === "add") {
+        this.modalTitle = "Add Product";
+        this.currentProduct = {
+          name: "",
+          description: "",
+          price: 0,
+          stock: 0,
+          category: "",
+          barcode: "",
+          status: "Available",
+        };
+      } else if (action === "edit") {
+        this.modalTitle = "Edit Product";
+        this.currentProduct = { ...product };
+      } else if (action === "view") {
+        this.modalTitle = "View Product";
+        this.currentProduct = { ...product };
       }
       new bootstrap.Modal(document.getElementById("productModal")).show();
     },
     addProduct() {
-      // Code to add the new product
-      this.products.push({ ...this.newProduct, id: this.products.length + 1 });
-      this.newProduct = {
-        name: "",
-        description: "",
-        price: 0,
-        stock: 0,
-        category: "",
-        barcode: "",
-        status: "Available",
+      const newProduct = {
+        id: this.products.length + 1,
+        ...this.currentProduct,
       };
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("addProductModal")
-      );
-      modal.hide();
+      this.products.push(newProduct);
+      this.closeModal();
     },
     submitEdit() {
-      const index = this.products.findIndex(
-        (p) => p.id === this.selectedProduct.id
-      );
+      const index = this.products.findIndex((p) => p.id === this.currentProduct.id);
       if (index !== -1) {
-        this.products[index] = { ...this.selectedProduct };
+        this.products.splice(index, 1, this.currentProduct);
       }
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("productModal")
-      );
-      modal.hide();
+      this.closeModal();
     },
-    confirmDelete() {
-      this.products = this.products.filter(
-        (p) => p.id !== this.selectedProduct.id
-      );
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("productModal")
-      );
-      modal.hide();
+    confirmDelete(productId) {
+      this.products = this.products.filter((p) => p.id !== productId);
     },
+    closeModal() {
+      const modalElement = document.getElementById("productModal");
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();  // Programmatically close the modal
+      }
+    },
+    
   },
 };
 </script>
 
-<style scoped>
-/* Add any specific styles you need here */
+<style>
+/* Add any additional styles here */
 </style>
