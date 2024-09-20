@@ -42,7 +42,7 @@
             </button>
             <button
               class="btn btn-danger btn-sm"
-              @click="showModal('delete', customer.id)"
+              @click="confirmDelete(customer)"
             >
               <i class="fa fa-trash"></i>
             </button>
@@ -114,13 +114,13 @@
                   required
                 />
               </div>
-              <div class="d-flex justify-content-end">
+              <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary me-2">
                   Add Customer
                 </button>
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  class="btn btn-secondary ms-auto"
                   data-bs-dismiss="modal"
                 >
                   Close
@@ -153,80 +153,114 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
-            <div v-if="modalAction === 'view'">
-              <p><strong>Name:</strong> {{ selectedCustomer.name }}</p>
-              <p><strong>Address:</strong> {{ selectedCustomer.address }}</p>
-              <p><strong>Email:</strong> {{ selectedCustomer.email }}</p>
-              <p><strong>Phone:</strong> {{ selectedCustomer.phone }}</p>
+          <div v-if="modalAction === 'view'" class="p-3">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                v-model="selectedCustomer.name"
+                type="text"
+                class="form-control"
+                id="name"
+                disabled
+              />
             </div>
-
-            <div v-if="modalAction === 'edit'">
-              <form @submit.prevent="submitEdit">
-                <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
-                  <input
-                    v-model="selectedCustomer.name"
-                    type="text"
-                    class="form-control"
-                    id="name"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="address" class="form-label">Address</label>
-                  <input
-                    v-model="selectedCustomer.address"
-                    type="text"
-                    class="form-control"
-                    id="address"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    v-model="selectedCustomer.email"
-                    type="email"
-                    class="form-control"
-                    id="email"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input
-                    v-model="selectedCustomer.phone"
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  Save Changes
-                </button>
-              </form>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <input
+                v-model="selectedCustomer.address"
+                type="text"
+                class="form-control"
+                id="address"
+                disabled
+              />
             </div>
-
-            <div v-if="modalAction === 'delete'">
-              <p>
-                Are you sure you want to delete {{ selectedCustomer.name }}?
-              </p>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                v-model="selectedCustomer.email"
+                type="email"
+                class="form-control"
+                id="email"
+                disabled
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input
+                v-model="selectedCustomer.phone"
+                type="text"
+                class="form-control"
+                id="phone"
+                disabled
+              />
+            </div>
+            <div class="d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              v-if="modalAction === 'delete'"
-              type="button"
-              class="btn btn-danger"
-              @click="confirmDelete"
-            >
-              Delete
-            </button>
+
+          <div v-if="modalAction === 'edit'" class="px-4">
+            <form @submit.prevent="submitEdit">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  v-model="selectedCustomer.name"
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input
+                  v-model="selectedCustomer.address"
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  v-model="selectedCustomer.email"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input
+                  v-model="selectedCustomer.phone"
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  required
+                />
+              </div>
+
+              <div class="d-flex justify-content-between mb-4">
+                <button type="submit" class="btn btn-primary me-2">
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary ms-auto"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -282,14 +316,16 @@ export default {
       );
       modal.hide();
     },
-    confirmDelete() {
-      this.customers = this.customers.filter(
-        (c) => c.id !== this.selectedCustomer.id
+    confirmDelete(customer) {
+      const confirmation = window.confirm(
+        `Are you sure you want to delete ${customer.name}?`
       );
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("customerModal")
-      );
-      modal.hide();
+      if (confirmation) {
+        this.customers = this.customers.filter(
+          (c) => c.id !== customer.id
+        );
+        alert(`${customer.name} has been deleted.`);
+      }
     },
     addCustomer() {
       this.customers.push({

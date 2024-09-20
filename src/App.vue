@@ -30,6 +30,7 @@
     <router-view></router-view>
   </div>
 </template>
+
 <style scoped>
 .nav-link {
   margin-right: 12px;
@@ -42,12 +43,18 @@
   margin-right: 8px;
 }
 
+/* Style pour le lien actif */
+.router-link-active {
+  font-weight: bold;
+  color: rgb(51, 51, 243); /* Couleur personnalisée pour le lien actif */
+  text-decoration: underline;
+}
+
 .nav-link:hover {
   text-decoration: underline;
   color: rgb(51, 51, 243);
 }
 
-/* Ajoute cette classe pour les marges à gauche */
 .ml-3 {
   margin-left: 54px; /* Ajuste cette valeur selon tes préférences */
 }
