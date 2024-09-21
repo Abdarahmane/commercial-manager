@@ -3,7 +3,7 @@
     <!-- Barre de navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <!-- Ajouter un margin-left à la barre de navigation -->
+       
         <div class="collapse navbar-collapse ml-3" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -43,10 +43,10 @@
   margin-right: 8px;
 }
 
-/* Style pour le lien actif */
+
 .router-link-active {
   font-weight: bold;
-  color: rgb(51, 51, 243); /* Couleur personnalisée pour le lien actif */
+  color: rgb(51, 51, 243); 
   text-decoration: underline;
 }
 
@@ -56,6 +56,6 @@
 }
 
 .ml-3 {
-  margin-left: 54px; /* Ajuste cette valeur selon tes préférences */
+  margin-left: 54px; 
 }
 </style>

@@ -34,7 +34,7 @@ Ce projet est une application web de gestion commerciale développée avec Vue.j
 
 ### 1. Gestion des Clients
 
-- **Ajouter un Client** : Permet d'ajouter un nouveau client avec des informations telles que le nom, l'adresse, et les coordonnées de contact.
+- **Ajouter un Client** : Permet d'ajouter un nouveau client avec des informations .
 - **Lister les Clients** : Affiche une liste de tous les clients, avec des options de tri et de filtrage.
 - **Détails du Client** : Affiche les détails complets d'un client dans une vue dédiée.
 - **Modifier un Client** : Permet de mettre à jour les informations d'un client existant.
